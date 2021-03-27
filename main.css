@@ -1,0 +1,43 @@
+body{
+  margin: 0%;
+  background-color: #ffffff;
+}
+nav{
+  background-color: #f4f4f4;
+  height: 6%;
+  margin-bottom: 1%;
+}
+nav .logo{
+  color: #46484c;
+position: absolute;
+align-items: center;
+margin: 1%;
+}
+.items{
+  display: flex;
+  justify-content:space-around;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+}
+.hitem{
+  border-style: solid;
+  border-color: #46484c;
+  max-width:  20%;
+  height: auto;
+  margin: 1%;
+}
+
+.hitem img{
+  max-width: 100%;
+}
+
+.witem{
+  border-style: solid;
+  border-color: #46484c;
+  max-height: 15px;
+  margin: 1%;
+
+}
+.witem img{
+  max-height: 100%;
+}
