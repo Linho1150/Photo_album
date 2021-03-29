@@ -2,35 +2,90 @@
 <head>
   <title>PhotoAlbum</title>
   <link rel="stylesheet" type="text/css" href="./main.css">
+  <link rel="stylesheet" href="./lightbox_dist/css/lightbox.min.css"/>
+
 </head>
 <body>
 <header>
   <nav>
-    <h1 class="logo">PhotoAlbum</ht1>
+    <h1 class="logo" style="text-align: center;">PhotoAlbum</h1>
   </nav>
 </header>
 <main>
-  <div class="items">
-    <div class="witem">
-      <img src="img/w.jpg"></img>
-    </div>
-    <div class="witem">
-      <img src="img/w.jpg"></img>
-    </div>
-    <div class="hitem">
-      <img src="img/jiso.jpg"></img>
-    </div>
-    <div class="witem">
-      <img src="img/w.jpg"></img>
-    </div>
-    <div class="hitem">
-      <img src="img/jiso.jpg"></img>
-    </div>
-
-  </div>
+  <div class="items" id="items"></div>
+  <div class="item">
+  <a class="example-image-link" href="./img/1.jpg" data-lightbox="image-1" data-title="1"><img class="example-image" scr="./img/1.jpg"></img></a></div>
 </main>
 <footer>
 
 </footer>
 </body>
+<script src="./lightbox_dist/js/lightbox-plus-jquery.min.js"></script>
+<script>
+var bCheckEnabled = true;
+var bFinishCheck = false;
+
+var img;
+var imgArray = new Array();
+var i = 1;
+
+var myInterval = setInterval(loadImage, 1);
+read_text();
+function loadImage() {
+
+    if (bFinishCheck) {
+        clearInterval(myInterval);
+        //display_object();
+        return;
+    }
+
+    if (bCheckEnabled) {
+
+        bCheckEnabled = false;
+
+        img = new Image();
+        img.onload = fExists;
+        img.onerror = fDoesntExist;
+        img.src = 'img/' + i + '.jpg';
+
+    }
+
+}
+
+function fExists() {
+    imgArray.push(img);
+    i++;
+    bCheckEnabled = true;
+}
+function fDoesntExist() {
+    bFinishCheck = true;
+}
+function display_object(){
+  var count, text = "";
+
+  for (count in imgArray) {
+  text += "<div class=\"item\"><img src=\""+imgArray[count].src+"\"></img></div>";
+  };
+  document.getElementById("items").innerHTML = text;
+}
+
+function read_text(){
+
+  var file = "./file_list/list.txt";
+  var rawFile = new XMLHttpRequest();
+  rawFile.open("GET", file);
+  rawFile.onreadystatechange = function ()
+  {
+      if(rawFile.readyState === 4)
+      {
+          if(rawFile.status === 200 || rawFile.status == 0)
+          {
+              var allText = rawFile.responseText;
+              alert(allText);
+          }
+      }
+  }
+  rawFile.send(null);
+}
+</script>
 </html>
