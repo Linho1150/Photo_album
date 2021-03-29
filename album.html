@@ -41,7 +41,7 @@ function loadImage(str_filelist) {
   count=arr_filelist[0];
 
   //var arrstring = arrfile.split("\n");
-  for(var tmp=1;tmp<=count;tmp++){
+  for(var tmp=count;tmp>0;tmp--){
     var name_date=arr_filelist[tmp].split("/");
     DataArray.push(name_date);
   }
