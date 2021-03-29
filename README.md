@@ -1,3 +1,5 @@
+# Photo_album
++ just photo album
 # Photo_album source
 + Load all images in a folder with vanila.js
 	- https://stackoverflow.com/questions/11144261/javascript-how-to-load-all-images-in-a-folder
