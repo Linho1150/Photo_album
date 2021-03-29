@@ -13,8 +13,6 @@
 </header>
 <main>
   <div class="items" id="items"></div>
-  <div class="item">
-  <a class="example-image-link" href="./img/1.jpg" data-lightbox="image-1" data-title="1"><img class="example-image" scr="./img/1.jpg"></img></a></div>
 </main>
 <footer>
 
@@ -22,60 +20,50 @@
 </body>
 <script src="./lightbox_dist/js/lightbox-plus-jquery.min.js"></script>
 <script>
+    lightbox.option({
+      'disableScrolling': true;
+    })
+</script>
+<script>
 var bCheckEnabled = true;
 var bFinishCheck = false;
 
 var img;
-var imgArray = new Array();
-var i = 1;
+var DataArray = new Array();
+var count = 1;
+read_text();
+//var myInterval = setInterval(loadImage, 1);
 
-var myInterval = setInterval(loadImage, 1);
-var arrfile = read_text();
-var arrstring = arrfile.split("\n");
+function loadImage(str_filelist) {
 
-function loadImage() {
 
-    if (bFinishCheck) {
-        clearInterval(myInterval);
-        //display_object();
-        return;
-    }
+  var arr_filelist=str_filelist.split("\n");
+  count=arr_filelist[0];
 
-    if (bCheckEnabled) {
-
-        bCheckEnabled = false;
-
-        img = new Image();
-        img.onload = fExists;
-        img.onerror = fDoesntExist;
-        img.src = 'img/' + i + '.jpg';
-
-    }
-
+  //var arrstring = arrfile.split("\n");
+  for(var tmp=1;tmp<=count;tmp++){
+    var name_date=arr_filelist[tmp].split("/");
+    DataArray.push(name_date);
+  }
+  display_object(DataArray)
 }
 
-function fExists() {
-    imgArray.push(img);
-    i++;
-    bCheckEnabled = true;
-}
-function fDoesntExist() {
-    bFinishCheck = true;
-}
-function display_object(){
+function display_object(DataArray){
   var count, text = "";
+  var name,date;
 
-  for (count in imgArray) {
-  text += "<div class=\"item\"><img src=\""+imgArray[count].src+"\"></img></div>";
+  for (count in DataArray) {
+  name=DataArray[count][0];
+  date=DataArray[count][1];
+  date=date.substring(0,4)+"-"+date.substring(4,6)+"-"+date.substring(6,8);
+  text += "<div class=\"item\"><a class=\"example-image-link\" href=\"./img/"+name+"\" data-lightbox=\""+date+"\" data-title=\""+date+"\"><img class=\"example-image\" src=\"./img/"+name+"\"></img></a></div>";
   };
   document.getElementById("items").innerHTML = text;
 }
 
 function read_text(){
-
   var file = "https://raw.githubusercontent.com/Linho1150/Photo_album/main/file_list/list.txt";
   var rawFile = new XMLHttpRequest();
-  var allText;
   rawFile.open("GET", file);
   rawFile.onreadystatechange = function ()
   {
@@ -84,11 +72,12 @@ function read_text(){
           if(rawFile.status === 200 || rawFile.status == 0)
           {
               var allText = rawFile.responseText;
-              alert(allText);
+              loadImage(allText);
           }
       }
   }
   rawFile.send(null);
+
 }
 </script>
 </html>
