@@ -30,7 +30,9 @@ var imgArray = new Array();
 var i = 1;
 
 var myInterval = setInterval(loadImage, 1);
-read_text();
+var arrfile = read_text();
+var arrstring = arrfile.split("\n");
+
 function loadImage() {
 
     if (bFinishCheck) {
@@ -73,6 +75,7 @@ function read_text(){
 
   var file = "https://raw.githubusercontent.com/Linho1150/Photo_album/main/file_list/list.txt";
   var rawFile = new XMLHttpRequest();
+  var allText;
   rawFile.open("GET", file);
   rawFile.onreadystatechange = function ()
   {
